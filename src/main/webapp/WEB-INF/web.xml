@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <display-name>EduManager Application</display-name>
+
+    <welcome-file-list>
+        <welcome-file>login</welcome-file>
+    </welcome-file-list>
+
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>org.example.smartrecruit.controllers.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <!-- Autres servlets existants -->
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>org.example.smartrecruit.controllers.HomeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CndidatServlet</servlet-name>
+        <servlet-class>org.example.smartrecruit.controllers.CandidatServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>OffreServlet</servlet-name>
+        <servlet-class>org.example.smartrecruit.controllers.OffreServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CandidatureServlet</servlet-name>
+        <servlet-class>org.example.smartrecruit.controllers.CandidatServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OffreServlet</servlet-name>
+        <url-pattern>/enrollments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OffreServlet</servlet-name>
+        <url-pattern>/enrollments/enroll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OffreServlet</servlet-name>
+        <url-pattern>/enrollments/unenroll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OffreServlet</servlet-name>
+        <url-pattern>/enrollments/student/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OffreServlet</servlet-name>
+        <url-pattern>/enrollments/showEnrollForm</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CndidatServlet</servlet-name>
+        <url-pattern>/create</url-pattern>
+        <url-pattern>/read</url-pattern>
+        <url-pattern>/update</url-pattern>
+        <url-pattern>/delete</url-pattern>
+        <url-pattern>/showCreateForm</url-pattern>
+        <url-pattern>/showUpdateForm</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CandidatureServlet</servlet-name>
+        <url-pattern>/students/create</url-pattern>
+        <url-pattern>/students/read</url-pattern>
+        <url-pattern>/students/update</url-pattern>
+        <url-pattern>/students/delete</url-pattern>
+        <url-pattern>/students/showCreateForm</url-pattern>
+        <url-pattern>/students/showUpdateForm</url-pattern>
+    </servlet-mapping>
+
+    <!-- Configuration de la session -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+</web-app>
