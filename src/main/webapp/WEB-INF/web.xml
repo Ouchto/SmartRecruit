@@ -27,10 +27,7 @@
         <servlet-class>org.example.smartrecruit.controllers.HomeServlet</servlet-class>
     </servlet>
 
-    <servlet>
-        <servlet-name>CndidatServlet</servlet-name>
-        <servlet-class>org.example.smartrecruit.controllers.CandidatServlet</servlet-class>
-    </servlet>
+
 
     <servlet>
         <servlet-name>OffreServlet</servlet-name>
@@ -44,34 +41,11 @@
 
     <servlet-mapping>
         <servlet-name>OffreServlet</servlet-name>
-        <url-pattern>/enrollments</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OffreServlet</servlet-name>
-        <url-pattern>/enrollments/enroll</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OffreServlet</servlet-name>
-        <url-pattern>/enrollments/unenroll</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OffreServlet</servlet-name>
-        <url-pattern>/enrollments/student/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OffreServlet</servlet-name>
-        <url-pattern>/enrollments/showEnrollForm</url-pattern>
+        <url-pattern>/offres</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>CndidatServlet</servlet-name>
-        <url-pattern>/create</url-pattern>
-        <url-pattern>/read</url-pattern>
-        <url-pattern>/update</url-pattern>
-        <url-pattern>/delete</url-pattern>
-        <url-pattern>/showCreateForm</url-pattern>
-        <url-pattern>/showUpdateForm</url-pattern>
-    </servlet-mapping>
+
+
 
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>

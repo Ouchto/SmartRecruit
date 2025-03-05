@@ -9,7 +9,7 @@ public class OffreDAO {
     private Connection getConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/smartrecruit";
         String username = "root";
-        String password = "password";
+        String password = "admin";
         return DriverManager.getConnection(url, username, password);
     }
 
@@ -88,12 +88,12 @@ public class OffreDAO {
         return offres;
     }
 
-    public boolean insert(OffreEmploi offre) {
+    public void insert(OffreEmploi offre) throws SQLException {
         String sql = "INSERT INTO offres_emploi (titre, description, type_contrat,date_publication) " +
                 "VALUES (?, ?, ?, ?)";
+        Connection conn = getConnection();
 
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, offre.getTitre());
             stmt.setString(2, offre.getDescription());
@@ -101,22 +101,9 @@ public class OffreDAO {
             stmt.setDate(4, new java.sql.Date(offre.getDatePublication().getTime()));
 
 
-            int affectedRows = stmt.executeUpdate();
-
-            if (affectedRows == 0) {
-                return false;
-            }
-
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    offre.setId(generatedKeys.getInt(1));
-                }
-            }
-
-            return true;
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 

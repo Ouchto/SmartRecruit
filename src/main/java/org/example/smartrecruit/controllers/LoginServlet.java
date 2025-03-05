@@ -56,14 +56,15 @@ public class LoginServlet extends HttpServlet {
                             // response.sendRedirect("home");
 
                             if (user1.getRole().equals("admin")) {
-                                try {
-                                    request.getRequestDispatcher("index.jsp").forward(request, response);
 
+                                try {
+                                    request.getRequestDispatcher("offreList.jsp").forward(request, response);
                                 } catch (ServletException e) {
                                     throw new RuntimeException(e);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
+
                             } else if (user1.getRole().equals("recruteur")) {
                                 try {
                                     request.getRequestDispatcher("recruteurHome.jsp").forward(request, response);

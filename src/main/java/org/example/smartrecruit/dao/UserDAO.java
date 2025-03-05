@@ -13,10 +13,9 @@ public class UserDAO {
     private static final String USER = "root";
     private static final String PASSWORD = "admin";
 
-    // Chargement du driver (optionnel avec les versions récentes de JDBC)
+
     static {
         try {
-            System.out.println("Chargement du driver JDBC...");
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Erreur de chargement du driver JDBC", e);
