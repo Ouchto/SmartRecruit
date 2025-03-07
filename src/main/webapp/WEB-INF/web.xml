@@ -54,12 +54,7 @@
 
     <servlet-mapping>
         <servlet-name>CandidatureServlet</servlet-name>
-        <url-pattern>/students/create</url-pattern>
-        <url-pattern>/students/read</url-pattern>
-        <url-pattern>/students/update</url-pattern>
-        <url-pattern>/students/delete</url-pattern>
-        <url-pattern>/students/showCreateForm</url-pattern>
-        <url-pattern>/students/showUpdateForm</url-pattern>
+        <url-pattern>/candidature</url-pattern>
     </servlet-mapping>
 
     <!-- Configuration de la session -->
