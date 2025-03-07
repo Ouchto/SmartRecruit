@@ -1,7 +1,9 @@
 package org.example.smartrecruit.controllers;
 
 import org.example.smartrecruit.dao.UserDAO;
+import org.example.smartrecruit.dao.OffreDAO;
 import org.example.smartrecruit.model.User;
+import org.example.smartrecruit.model.OffreEmploi;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,101 +11,74 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
 
 public class LoginServlet extends HttpServlet {
     private UserDAO userDAO;
+    private OffreDAO offreDAO;
 
     @Override
     public void init() {
         userDAO = new UserDAO();
+        offreDAO = new OffreDAO();
     }
-
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getServletPath();
-        System.out.println(action);
         try {
-            switch (action) {
-                case "/logout":
-                    request.getSession().invalidate();
-                    response.sendRedirect("login.jsp");
-                    break;
-                default:
-                    String username = request.getParameter("username");
-                    String password = request.getParameter("password");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
+            List<User> users = userDAO.getAll();
+            boolean loginSuccessful = false;
 
+            for (User user : users) {
+                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                    loginSuccessful = true;
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("username", username);
+                    session.setAttribute("password", password);
 
-                    List<User> user =  userDAO.getAll();
-                    user.forEach(user1 -> {
+                    switch (user.getRole()) {
+                        case "admin":
 
-                        if(user1.getUsername().equals(username) && user1.getPassword().equals(password)) {
+                            List<OffreEmploi> offres = offreDAO.getAll();
+                            request.setAttribute("offres", offres);
+                            request.getRequestDispatcher("offreList.jsp").forward(request, response);
+                            break;
 
-                            HttpSession session = request.getSession(true);
-                            session.setAttribute("username", username);
-                            session.setAttribute("password", password);
-                            // response.sendRedirect("home");
+                        case "recruteur":
 
-                            if (user1.getRole().equals("admin")) {
+                            request.getRequestDispatcher("recruteurHome.jsp").forward(request, response);
+                            break;
 
-                                try {
-                                    request.getRequestDispatcher("offreList.jsp").forward(request, response);
-                                } catch (ServletException e) {
-                                    throw new RuntimeException(e);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
+                        case "candidat":
+                            List<OffreEmploi> activeOffres = offreDAO.getAll();
+                            request.setAttribute("offres", activeOffres);
+                            request.getRequestDispatcher("candidatHome.jsp").forward(request, response);
+                            break;
 
-                            } else if (user1.getRole().equals("recruteur")) {
-                                try {
-                                    request.getRequestDispatcher("recruteurHome.jsp").forward(request, response);
-
-                                } catch (ServletException e) {
-                                    throw new RuntimeException(e);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }else {
-                                try {
-                                    request.getRequestDispatcher("candidatHome.jsp").forward(request, response);
-
-                                } catch (ServletException e) {
-                                    throw new RuntimeException(e);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-
-
-                        }
-                    });
-                    request.setAttribute("errorMessage", "Nom d'utilisateur ou mot de passe incorrect");
-
-                    try {
-                        request.getRequestDispatcher("login.jsp").forward(request, response);
-                    } catch (ServletException e) {
-                        throw new RuntimeException(e);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        default:
+                            response.sendRedirect("login.jsp");
                     }
                     break;
+                }
             }
+
+            // If login was not successful
+            if (!loginSuccessful) {
+                request.setAttribute("errorMessage", "Nom d'utilisateur ou mot de passe incorrect");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+
         } catch (Exception e) {
             throw new ServletException("An error occurred processing POST request", e);
         }
-
-
-
     }
 }

@@ -1,141 +1,53 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-    <link rel="stylesheet" href="style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Connexion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f2f5;
         }
-
-        .wrapper {
-            width: 400px;
-            background: #fff;
-            border-radius: 10px;
-            padding: 30px 40px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .wrapper h1 {
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .input-box {
-            position: relative;
+        .login-container {
+            max-width: 400px;
             width: 100%;
-            height: 50px;
-            margin: 30px 0;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .input-box input {
-            width: 100%;
-            height: 100%;
-            padding: 20px 45px 20px 20px;
-            border: 1px solid #ccc;
-            border-radius: 40px;
-            outline: none;
-            font-size: 16px;
-        }
-
-        .input-box i {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: #555;
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .remember-forgot a {
-            color: #9b59b6;
-            text-decoration: none;
-        }
-
-        .remember-forgot a:hover {
-            text-decoration: underline;
-        }
-
-        .btn {
-            width: 100%;
-            height: 45px;
-            border-radius: 40px;
-            border: none;
-            outline: none;
-            background: #9b59b6;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background: #8e44ad;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: #9b59b6;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="login-container">
+    <h2 class="text-center mb-4">Connexion</h2>
+
+    <%
+        String errorMessage = (String) request.getAttribute("errorMessage");
+        if (errorMessage != null) {
+    %>
+    <div class="alert alert-danger" role="alert">
+        <%= errorMessage %>
+    </div>
+    <% } %>
+
     <form action="login" method="post">
-        <h1>Login</h1>
-        <% if(request.getAttribute("errorMessage") != null) { %>
-        <div class="error-message text-center">
-            <%= request.getAttribute("errorMessage") %>
+        <div class="mb-3">
+            <label for="username" class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="username" name="username" required>
         </div>
-        <% } %>
-        <div class="input-box">
-            <input type="text" id="username" name="username" placeholder="Username" required>
-            <i class='bx bxs-user'></i>
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <div class="input-box">
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <i class='bx bxs-lock-alt'></i>
-        </div>
-
-        <button type="submit" class="btn">Login</button>
-
+        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
