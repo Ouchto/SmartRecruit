@@ -238,4 +238,25 @@ public class CandidatureDAO {
             return false;
         }
     }
+    public String getLettreMotivation(int candidatureId) {
+        String lettreMotivation = "";
+
+        String sql = "SELECT lettre_motivation FROM candidatures WHERE id = ?";
+
+        try (Connection conn =getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, candidatureId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    lettreMotivation = rs.getString("lettre_motivation");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lettreMotivation;
+    }
 }
